@@ -1,17 +1,26 @@
 {% extends "base.html" %}
-{% block title %}naimish.xyz{% endblock %}
+
+{% block title %}{{ site_title }}{% endblock %}
 
 {% block content %}
-<h2>hello there.</h2>
-<p>this is my personal site. rebuilt with rust + axum + askama.
-as always i am going to be using this for documenting my projects.
-have a good time :)
-</p>
+<h1><a href="/">{{ site_title }}</a></h1>
+<p class="desc">{{ site_description }}</p>
 
-<h3>latest posts</h3>
-<ul>
-{% for post in recent_posts %}
-<li><a href="/posts/{{ post.slug }}">{{ post.title }}</a> — {{ post.date }}</li>
-{% endfor %}
-</ul>
+<div class="grid">
+    <div class="box">
+        <strong>Links</strong><br><br>
+        <a href="/contact">Contact</a><br>
+        <a href="/blog">Blogs</a><br>
+        <a href="/articles">Articles</a><br>
+        <a href="https://github.com/TheRogueVigilante">GitHub</a><br>
+        <a href="https://youtube.com/@TheRogueVigilante">YouTube</a><br>
+    </div>
+
+    <div class="box">
+        <strong>Recent Posts</strong><br><br>
+        {% for post in recent_posts[..num_of_posts] %}
+            {{ post.kind_prefix() }}<a href="{{ post.summary.slug }}">{{ post.summary.title }}</a><br>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

@@ -1,10 +1,11 @@
 {% extends "base.html" %}
-{% block title %}{{ title }}{% endblock %}
+
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<h1>{{ title }}</h1>
-<small>{{ date }}</small>
-<article>
-{{ body|safe }}
-</article>
+<h1><a href="/">{{ post.title }}</a></h1>
+<p class="desc">{{ post.date }} — {{ post.author }}</p>
+<div class="box">
+    {{ post.content | safe }}
+</div>
 {% endblock %}
