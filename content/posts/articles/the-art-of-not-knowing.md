@@ -1,5 +1,6 @@
 ---
 title: the art of not knowing
+date: 2025-09-02
 ---
 
 # the art of not knowing

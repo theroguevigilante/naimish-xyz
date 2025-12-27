@@ -1,5 +1,6 @@
 ---
 title: end of 10
+date: 2025-09-08
 ---
 
 # end of 10
