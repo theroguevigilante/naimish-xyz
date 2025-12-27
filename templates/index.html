@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}naimish.xyz{% endblock %}
+
+{% block content %}
+<h2>hello there.</h2>
+<p>this is my personal site. rebuilt with rust + axum + askama.
+as always i am going to be using this for documenting my projects.
+have a good time :)
+</p>
+
+<h3>latest posts</h3>
+<ul>
+{% for post in recent_posts %}
+<li><a href="/posts/{{ post.slug }}">{{ post.title }}</a> — {{ post.date }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

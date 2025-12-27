@@ -1,0 +1,13 @@
+[package]
+name = "naimish-xyz"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { version = "1.48.0", features = ["full"] }
+axum = { version = "0.8.8", features = ["macros", "http2", "ws"] }
+serde = { version = "1.0.228", features = ["derive"] }
+uuid = "1.19.0"
+askama = "0.15.0"
+tower-http = { version = "0.6.8", features = ["fs"] }
+comrak = "0.49.0"

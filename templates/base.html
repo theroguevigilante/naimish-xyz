@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+<header>
+    <h1><a href="/">naimish.xyz</a></h1>
+    <nav>
+        <a href="/">home</a>
+        <a href="/blog">blog</a>
+        <a href="/contact">contact</a>
+        <a href="/articles">articles</a>
+        <a href="/pictures">pictures</a>
+        <a href="https://www.youtube.com/@TheRogueVigilante">youtube</a>
+        <a href="https://www.github.com/TheRogueVigilante">github</a>
+    </nav>
+</header>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer>
+    &copy; {{ current_year }} Naimish Pandey
+</footer>
+</body>
+</html>
