@@ -16,3 +16,18 @@ pub struct PostSummary {
     pub slug: String,
     pub date: Option<String>,
 }
+
+impl PostSummary {
+    pub fn date_str(&self) -> &str {
+        self.date.as_deref().unwrap_or("")
+    }
+}
+
+impl Post {
+    pub fn kind_prefix(&self) -> &'static str {
+        match self.kind {
+            PostType::Article => "* ",
+            PostType::Blog => "",
+        }
+    }
+}
