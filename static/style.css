@@ -1,66 +1,180 @@
-h1 a {
-    font-family: monospace;
-    color: #f2f2f2;
-    text-decoration: none;
-}
-
-h1 a:hover {
-    text-decoration: underline;
-}
-
+/* =========================================================
+   GLOBAL TERMINAL / CRT LOOK
+   ========================================================= */
 body {
-    margin: 2rem auto;
-    max-width: 800px;
+    background:#000;
+    color:#c8ffc8; /* retro terminal green */
     font-family: monospace;
-    background: #000;
-    color: #f2f2f2;
+    margin:0;
+    padding:0;
+    line-height:1.8;
+    font-size:1.15rem;
+    text-shadow:0 0 4px #00ff55;
+    animation:crt-flicker 5s infinite steps(2, end);
+    position:relative;
+    overflow-x:hidden;
 }
 
-header, nav, footer {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #f2f2f2;
+/* CRT GREEN GLOW TINT */
+* {
+    text-shadow:0 0 2px #00ff55;
 }
 
-nav a {
-    margin-right: 1rem;
-    color: #f2f2f2;
-    text-decoration: none;
+/* =========================================================
+   CRT SCANLINES OVERLAY
+   ========================================================= */
+body::before {
+    content:"";
+    pointer-events:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        rgba(0,0,0,0) 50%, 
+        rgba(0,0,0,0.2) 50%
+    );
+    background-size:100% 3px;
+    opacity:0.25;
+    z-index:9999;
 }
 
-nav a:hover {
-    text-decoration: underline;
+/* Slight screen curve vignette for CRT */
+body::after {
+    content:"";
+    pointer-events:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background:radial-gradient(circle, rgba(0,255,120,0.04) 0%, rgba(0,0,0,0.9) 90%);
+    mix-blend-mode:overlay;
+    z-index:9998;
 }
 
-h1, h2, h3 {
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: #ffffff;
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+/* Subtle flicker and frame stutter */
+@keyframes crt-flicker {
+    0% { opacity:1; }
+    5% { opacity:0.96; }
+    10% { opacity:1; }
+    15% { opacity:0.98; }
+    20% { opacity:1; }
+    25% { opacity:0.97; }
+    30% { opacity:1; }
+    100% { opacity:1; }
 }
 
-ul { padding-left: 1rem; }
-li { margin: 0.25rem 0; }
-
-footer {
-    border-top: 1px solid #f2f2f2;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    font-size: 0.85rem;
-    text-align: center;
-    color: #cccccc;
+/* Neon flicker for elements that get .flicker class */
+@keyframes neon-blink {
+    0%, 30%, 100% { opacity:1; text-shadow:0 0 6px #00ff66; }
+    10% { opacity:0.7; text-shadow:none; }
+    20% { opacity:1; text-shadow:0 0 10px #00ff66; }
 }
 
-@media (max-width: 600px) {
-    body {
-        margin: 1rem;
-        font-size: 16px;
-    }
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+.container {
+    max-width:900px;
+    margin:auto;
+    padding:2rem;
+    display:flex;
+    flex-direction:column;
+    gap:2rem;
+}
 
-    nav a {
-        display: inline-block;
-        margin-bottom: 0.5rem;
-    }
+/* =========================================================
+   TITLE (RETRO CRT HEADER)
+   ========================================================= */
+h1 {
+    font-size:2.7rem;
+    margin:0;
+    color:#90ffb4;
+    text-shadow:
+        0 0 8px #00ff99,
+        0 0 14px #00ff99,
+        0 0 25px #00ff99;
+    transition:0.3s;
+    animation:neon-blink 6s infinite;
+}
 
-    header h1 {
-        font-size: 1.4rem;
-    }
+h1:hover {
+    scale:1.02;
+    text-shadow:
+        0 0 10px #00ff99,
+        0 0 24px #00ff99,
+        0 0 50px #00ff99;
+}
+
+/* =========================================================
+   PARAGRAPHS & BOXES
+   ========================================================= */
+p.desc {
+    font-size:1.2rem;
+    color:#aaffc5;
+}
+
+.box {
+    border:2px solid #003b1b;
+    padding:1.2rem;
+    background:#001b0a;
+    transition:.3s;
+    font-size:1.1rem;
+}
+
+.box:hover {
+    border-color:#00ff99;
+    text-shadow:0 0 8px #00ff66;
+    scale:1.01;
+}
+
+/* Responsive grid */
+.grid {
+    display:flex;
+    flex-direction:column;
+    gap:1.5rem;
+}
+
+@media (min-width:800px) {
+    .grid { flex-direction:row; }
+    .box { flex:1; }
+}
+
+/* =========================================================
+   LINKS (TERMINAL STYLE)
+   ========================================================= */
+a {
+    color:#baffdb;
+    text-decoration:none;
+    font-size:1.15rem;
+    transition:0.25s;
+}
+
+a:hover {
+    color:#00ff99;
+    text-shadow:
+        0 0 8px #00ff66,
+        0 0 18px #00ff66,
+        0 0 35px #00ff66;
+    scale:1.02;
+}
+
+/* =========================================================
+   TERMINAL CURSOR (BLINKING | PURE CSS)
+   ========================================================= */
+h1::after {
+    content:"▌";                  /* block cursor character */
+    margin-left:8px;
+    color:#00ff99;
+    animation:cursor-blink 1s steps(2, start) infinite;
+    text-shadow:0 0 6px #00ff66, 0 0 12px #00ff66;
+}
+
+@keyframes cursor-blink {
+    0%, 49% { opacity:1; }
+    50%, 100% { opacity:0; }
 }
