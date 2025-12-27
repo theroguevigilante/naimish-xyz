@@ -1,5 +1,8 @@
 #[derive(Clone)]
-pub struct Post(pub PostType, pub PostSummary);
+pub struct Post {
+    pub kind: PostType,
+    pub summary: PostSummary,
+}
 
 #[derive(Clone)]
 pub enum PostType {
@@ -11,6 +14,5 @@ pub enum PostType {
 pub struct PostSummary {
     pub title: String,
     pub slug: String,
-    pub kind: PostType,
     pub date: Option<String>,
 }
