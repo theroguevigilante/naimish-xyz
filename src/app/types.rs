@@ -31,4 +31,10 @@ impl Post {
             PostType::Blog => "",
         }
     }
+    pub fn kind_route(&self) -> &'static str {
+        match self.kind {
+            PostType::Article => "articles/",
+            PostType::Blog => "blog/",
+        }
+    }
 }
