@@ -19,7 +19,7 @@
     <div class="box">
         <strong>Recent Posts</strong><br><br>
         {% for post in recent_posts[..num_of_posts] %}
-            {{ post.kind_prefix() }}<a href="{{ post.summary.slug }}">{{ post.summary.title }}</a><br>
+        {{ post.kind_prefix() }}<a href="{{ post.kind_route() }}{{ post.summary.slug }}">{{ post.summary.title }}</a><br>
         {% endfor %}
     </div>
 </div>
