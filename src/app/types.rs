@@ -2,6 +2,7 @@
 pub struct Post {
     pub kind: PostType,
     pub summary: PostSummary,
+    pub content: Option<String>
 }
 
 #[derive(Clone)]
