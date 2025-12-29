@@ -16,24 +16,28 @@ pub fn strip_front_matter(content: &str) -> &str {
     }
 }
 
-fn get_post(slug: &str) -> Option<Post> {
-    let mut path = String::from("content/");
-    path.push_str(slug);
+pub fn get_post(slug: &str) -> Option<Post> {
+    let (kind, clean_slug) = slug.split_once('/').unwrap_or(("", slug));
 
-    let posts = if slug.starts_with("articles") {
-        recent_articles()
-    } else if slug.starts_with("blog") {
-        recent_blogs()
-    } else {
-        return None;
+    let path = format!("content/posts/{}/{}.md", kind, clean_slug);
+    println!("loading file: {}", path);
+
+    let posts = match kind {
+        "articles" => recent_articles(),
+        "blog"     => recent_blogs(),
+        _ => return None,
     };
 
-    let mut post = posts.into_iter().find(|p| p.summary.slug == slug)?;
+    let mut post = posts
+        .into_iter()
+        .inspect(|p| println!("checking slug: {}", p.summary.slug))
+        .find(|p| p.summary.slug == clean_slug)?;
     let content = std::fs::read_to_string(&path).ok()?;
-
     post.content = Some(content);
+
     Some(post)
 }
+
 
 fn extract_field(text: &str, key: &str) -> Option<String> {
     text.lines()
