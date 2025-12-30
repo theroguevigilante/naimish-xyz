@@ -1,9 +1,15 @@
 use super::types::*;
 use std::fs;
+use comrak::markdown_to_html;
+use comrak::Options;
 
 fn sort_by_date(mut posts: Vec<Post>) -> Vec<Post> {
     posts.sort_by(|a, b| b.summary.date.cmp(&a.summary.date)); // newest first
     posts
+}
+
+pub fn md_to_html(input: &str) -> String {
+    markdown_to_html(input, &Options::default())
 }
 
 pub fn strip_front_matter(content: &str) -> &str {
