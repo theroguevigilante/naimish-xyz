@@ -21,7 +21,7 @@ async fn main() {
             "/articles",
             Router::new()
                 .route("/", get(articles::list_handler))
-//                .route("/:slug", get(articles::handler))
+                .route("/{slug}", get(articles::handler))
         )
         .nest(
             "/blog",
