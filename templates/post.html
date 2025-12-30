@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h1><a href="/">{{ post.title }}</a></h1>
-<p class="desc">{{ post.date }} — {{ post.author }}</p>
+<h1><a href="/">{{ title }}</a></h1>
+
+<p class="desc">
+    {% if date != "" %}{{ date }}{% endif %}
+</p>
+
 <div class="box">
-    {{ post.content | safe }}
+    {{ content | safe }}
 </div>
 {% endblock %}
