@@ -11,6 +11,7 @@ use routes::articles;
 use routes::blog;
 use routes::contact;
 
+
 #[tokio::main]
 async fn main() {
     let addr = "127.0.0.1:6432";
@@ -20,11 +21,13 @@ async fn main() {
             "/articles",
             Router::new()
                 .route("/", get(articles::list_handler))
+//                .route("/:slug", get(articles::handler))
         )
         .nest(
             "/blog",
             Router::new()
                 .route("/", get(blog::list_handler))
+                .route("/{slug}", get(blog::handler))
         )
         .route("/contact", get(contact::handler))
         .nest_service("/static", ServeDir::new("static"))
