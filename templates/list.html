@@ -9,7 +9,7 @@
     <ul style="list-style:none; padding:0; margin:0;">
         {% for post in posts %}
         <li style="margin-bottom:0.6rem;">
-            <a href="/posts/{{ post.summary.slug }}">{{ post.summary.title }}</a>
+            <a href="{{ post.kind_route() }}{{ post.summary.slug }}">{{ post.summary.title }}</a>
             <small style="opacity:0.75;">({{ post.summary.date_str() }})</small>
         </li>
         {% endfor %}
