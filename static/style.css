@@ -81,7 +81,7 @@ body::after {
 .container {
     max-width:900px;
     margin:auto;
-    padding:2rem;
+    padding:1.2rem;
     display:flex;
     flex-direction:column;
     gap:2rem;
@@ -91,7 +91,7 @@ body::after {
    TITLE (RETRO CRT HEADER)
    ========================================================= */
 h1 {
-    font-size:2.7rem;
+    font-size:1.8rem;
     margin:0;
     color:#90ffb4;
     text-shadow:
@@ -166,7 +166,7 @@ a:hover {
 /* =========================================================
    TERMINAL CURSOR (BLINKING | PURE CSS)
    ========================================================= */
-h1::after {
+h1 a::after {
     content:"▌";                  /* block cursor character */
     margin-left:8px;
     color:#00ff99;
@@ -177,4 +177,24 @@ h1::after {
 @keyframes cursor-blink {
     0%, 49% { opacity:1; }
     50%, 100% { opacity:0; }
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE FONT-SIZE
+   --------------------------------------------------------- */
+html {
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    html {
+        font-size: 12px;
+    }
 }
