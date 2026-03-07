@@ -11,6 +11,7 @@ use routes::home;
 use routes::articles;
 use routes::blog;
 use routes::contact;
+use routes::gen_feed;
 
 
 #[tokio::main]
@@ -34,7 +35,9 @@ async fn main() {
         .route("/contact", get(contact::handler))
         .nest_service("/static", ServeDir::new("static"))
         .route_service("/naimish.asc", get_service(ServeFile::new("naimish.asc")))
-        .route("/client_test", get(client_type::handler));
+        .route("/client_test", get(client_type::handler))
+        .route("/rss.xml", get(gen_feed::handler))
+        .route("/rss", get(gen_feed::handler));
     let listener = TcpListener::bind(addr).await.unwrap();
 
     axum::serve(listener, router).await.unwrap()

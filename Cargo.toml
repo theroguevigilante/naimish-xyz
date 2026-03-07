@@ -11,3 +11,5 @@ uuid = "1.19.0"
 askama = "0.15.0"
 tower-http = { version = "0.6.8", features = ["fs"] }
 comrak = "0.49.0"
+rss = "2.0.12"
+chrono = "0.4.44"
