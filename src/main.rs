@@ -7,16 +7,15 @@ use tower_http::services::ServeDir;
 use tower_http::services::ServeFile;
 
 use app::client_type;
-use routes::home;
 use routes::articles;
 use routes::blog;
 use routes::contact;
 use routes::gen_feed;
-
+use routes::home;
 
 #[tokio::main]
 async fn main() {
-    let port = std::env::var("PORT").unwrap_or_else(|_| "6432".into() );
+    let port = std::env::var("PORT").unwrap_or_else(|_| "6432".into());
     let addr = format!("0.0.0.0:{}", port);
     let router = Router::new()
         .route("/", get(home::handler))
@@ -24,13 +23,13 @@ async fn main() {
             "/articles",
             Router::new()
                 .route("/", get(articles::list_handler))
-                .route("/{slug}", get(articles::handler))
+                .route("/{slug}", get(articles::handler)),
         )
         .nest(
             "/blog",
             Router::new()
                 .route("/", get(blog::list_handler))
-                .route("/{slug}", get(blog::handler))
+                .route("/{slug}", get(blog::handler)),
         )
         .route("/contact", get(contact::handler))
         .nest_service("/static", ServeDir::new("static"))
