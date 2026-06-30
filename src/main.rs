@@ -12,6 +12,7 @@ use routes::blog;
 use routes::contact;
 use routes::gen_feed;
 use routes::home;
+use routes::projects;
 
 #[tokio::main]
 async fn main() {
@@ -32,6 +33,12 @@ async fn main() {
                 .route("/{slug}", get(blog::handler)),
         )
         .route("/contact", get(contact::handler))
+        .nest(
+            "/projects",
+            Router::new()
+                .route("/", get(projects::list_handler))
+                .route("/{slug}", get(projects::handler)),
+        )
         .nest_service("/static", ServeDir::new("static"))
         .route_service("/naimish.asc", get_service(ServeFile::new("naimish.asc")))
         .route("/client_test", get(client_type::handler))

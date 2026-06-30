@@ -1,7 +1,7 @@
 use super::types::*;
-use std::fs;
-use comrak::markdown_to_html;
 use comrak::Options;
+use comrak::markdown_to_html;
+use std::fs;
 
 fn sort_by_date(mut posts: Vec<Post>) -> Vec<Post> {
     posts.sort_by(|a, b| b.summary.date.cmp(&a.summary.date)); // newest first
@@ -30,7 +30,7 @@ pub fn get_post(slug: &str) -> Option<Post> {
 
     let posts = match kind {
         "articles" => recent_articles(),
-        "blog"     => recent_blogs(),
+        "blog" => recent_blogs(),
         _ => return None,
     };
 
@@ -43,7 +43,6 @@ pub fn get_post(slug: &str) -> Option<Post> {
 
     Some(post)
 }
-
 
 fn extract_field(text: &str, key: &str) -> Option<String> {
     text.lines()
@@ -114,4 +113,55 @@ pub fn recent_blogs() -> Vec<Post> {
     }
 
     sort_by_date(posts)
+}
+
+pub fn recent_projects() -> Vec<Project> {
+    let mut projects = Vec::new();
+
+    if let Ok(entries) = fs::read_dir("content/projects") {
+        for entry in entries.flatten() {
+            if entry.path().extension().and_then(|e| e.to_str()) == Some("md") {
+                let slug = entry
+                    .path()
+                    .file_stem()
+                    .unwrap()
+                    .to_string_lossy()
+                    .to_string();
+                let text = fs::read_to_string(entry.path()).unwrap_or_default();
+
+                let title = extract_field(&text, "title:").unwrap_or_else(|| slug.clone());
+                let date = extract_field(&text, "date:");
+                let description = extract_field(&text, "description:");
+                let repo = extract_field(&text, "repo:");
+                let docs = extract_field(&text, "docs:");
+                let tech = extract_field(&text, "tech:");
+
+                projects.push(Project {
+                    title,
+                    slug,
+                    date,
+                    description,
+                    repo,
+                    docs,
+                    tech,
+                    content: None,
+                });
+            }
+        }
+    }
+
+    projects.sort_by(|a, b| b.date.cmp(&a.date));
+    projects
+}
+
+pub fn get_project(slug: &str) -> Option<Project> {
+    let path = format!("content/projects/{}.md", slug);
+
+    let projects = recent_projects();
+    let mut project = projects.into_iter().find(|p| p.slug == slug)?;
+
+    let content = std::fs::read_to_string(&path).ok()?;
+    project.content = Some(content);
+
+    Some(project)
 }
