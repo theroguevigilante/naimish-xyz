@@ -10,6 +10,7 @@ use app::client_type;
 use routes::articles;
 use routes::blog;
 use routes::contact;
+use routes::donate;
 use routes::gen_feed;
 use routes::home;
 use routes::projects;
@@ -33,6 +34,7 @@ async fn main() {
                 .route("/{slug}", get(blog::handler)),
         )
         .route("/contact", get(contact::handler))
+        .route("/donate", get(donate::handler))
         .nest(
             "/projects",
             Router::new()

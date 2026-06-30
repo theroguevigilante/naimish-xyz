@@ -25,12 +25,6 @@ impl PostSummary {
 }
 
 impl Post {
-    pub fn kind_prefix(&self) -> &'static str {
-        match self.kind {
-            PostType::Article => "* ",
-            PostType::Blog => "",
-        }
-    }
     pub fn kind_route(&self) -> &'static str {
         match self.kind {
             PostType::Article => "articles/",

@@ -5,13 +5,12 @@
 {% block content %}
 <article>
     <h1>{{ page_title }}</h1>
-    <p class="article-meta">{{ page_description }}</p>
 
     <ul class="item-list">
-        {% for post in posts %}
+        {% for project in projects %}
         <li>
-            <a href="{{ post.kind_route() }}{{ post.summary.slug }}">{{ post.summary.title }}</a>
-            <small>({{ post.summary.date_str() }})</small>
+            <a href="/projects/{{ project.slug }}">{{ project.title }}</a>
+            <small>({{ project.date_str() }})</small>
         </li>
         {% endfor %}
     </ul>

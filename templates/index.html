@@ -3,24 +3,36 @@
 {% block title %}{{ site_title }}{% endblock %}
 
 {% block content %}
-<h1><a href="/">{{ page_name }}</a></h1>
-<p class="desc">{{ site_description }}</p>
+<article>
+    <h1>{{ page_name }}</h1>
+    <p class="desc">{{ site_description }}</p>
 
-<div class="grid">
-    <div class="box">
-        <strong>Links</strong><br><br>
-        <a href="/contact">Contact</a><br>
-        <a href="/blog">Blogs</a><br>
-        <a href="/articles">Articles</a><br>
-        <a href="https://github.com/TheRogueVigilante">GitHub</a><br>
-        <a href="https://youtube.com/@TheRogueVigilante">YouTube</a><br>
-    </div>
+    <section class="home-section">
+        <h2>About</h2>
+        <div class="article-body">
+            {{ about_text | safe }}
+        </div>
+    </section>
 
-    <div class="box">
-        <strong>Recent Posts</strong><br><br>
-        {% for post in recent_posts[..num_of_posts] %}
-        {{ post.kind_prefix() }}<a href="{{ post.kind_route() }}{{ post.summary.slug }}">{{ post.summary.title }}</a><br>
-        {% endfor %}
-    </div>
-</div>
+    <section class="home-section">
+        <h2>Recent Posts</h2>
+        <ul class="item-list">
+            {% for post in recent_posts[..num_of_posts] %}
+            <li>
+                <a href="{{ post.kind_route() }}{{ post.summary.slug }}">{{ post.summary.title }}</a>
+                <small>({{ post.summary.date_str() }})</small>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="home-section">
+        <h2>Elsewhere</h2>
+        <p>
+            <a href="https://github.com/TheRogueVigilante">GitHub</a>
+            &middot; <a href="https://youtube.com/@TheRogueVigilante">YouTube</a>
+            &middot; <a href="/contact">Contact</a>
+        </p>
+    </section>
+</article>
 {% endblock %}

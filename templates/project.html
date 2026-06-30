@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<article>
+    <div class="article-body">
+        {{ content | safe }}
+    </div>
+
+    {% if date != "" %}
+    <p class="article-meta">{{ date }}</p>
+    {% endif %}
+
+    {% if tech != "" || repo != "" || docs != "" || description != "" %}
+    <div class="project-meta">
+        {% if tech != "" %}{{ tech }}{% endif %}
+        {% if repo != "" %} &middot; <a href="{{ repo }}">Repository</a>{% endif %}
+        {% if docs != "" %} &middot; <a href="{{ docs }}">Documentation</a>{% endif %}
+        {% if description != "" %} &middot; <em>{{ description }}</em>{% endif %}
+    </div>
+    {% endif %}
+</article>
+{% endblock %}

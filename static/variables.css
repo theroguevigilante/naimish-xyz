@@ -1,0 +1,30 @@
+:root {
+    --bg: #1a1c1e;
+    --surface: #222527;
+    --text-primary: #d1cdc1;
+    --text-secondary: #9e9a94;
+    --text-muted: #6b6760;
+    --border: #3a3c3e;
+    --link: #7cb0e6;
+    --code-bg: #25272a;
+    --selection-bg: #665400;
+
+    --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Consolas, Menlo, Monaco, "Liberation Mono", monospace;
+
+    --h1: 2.5rem;
+    --h2: 2rem;
+    --h3: 1.5rem;
+    --h4: 1.25rem;
+    --body: 1.125rem;
+    --small: 0.95rem;
+    --code: 0.95rem;
+
+    --line-height: 1.75;
+    --paragraph-spacing: 1.25em;
+    --max-width: 740px;
+    --radius: 6px;
+    --border-width: 1px;
+    --transition: 150ms;
+}

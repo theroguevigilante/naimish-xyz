@@ -3,13 +3,45 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}{{ site_title }}{% endblock %}</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>{% block title %}Naimish{% endblock %}</title>
+    <link rel="stylesheet" href="/static/variables.css">
+    <link rel="stylesheet" href="/static/reset.css">
+    <link rel="stylesheet" href="/static/typography.css">
+    <link rel="stylesheet" href="/static/layout.css">
+    <link rel="stylesheet" href="/static/components.css">
     {% block head %}{% endblock %}
 </head>
 <body>
-<div class="container">
-    {% block content %}{% endblock %}
-</div>
+    <div class="container">
+        <header>
+            <nav>
+                <input type="checkbox" id="nav-toggle" class="nav-toggle">
+                <label for="nav-toggle" class="nav-label"><span class="hamburger"></span></label>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/articles">Articles</a>
+                    <a href="/blog">Blog</a>
+                    <a href="/projects">Projects</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/donate">Donate</a>
+                    <a href="https://github.com/TheRogueVigilante">GitHub</a>
+                    <a href="/rss">RSS</a>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer>
+            &copy; Naimish
+            &middot; <a href="mailto:naimish@naimish.xyz">Email</a>
+            &middot; <a href="https://github.com/TheRogueVigilante">GitHub</a>
+            &middot; <a href="/rss">RSS</a>
+            &middot; <a href="https://github.com/TheRogueVigilante/naimish-xyz">Source</a>
+            &middot; <a href="/naimish.asc">GPG Key</a>
+        </footer>
+    </div>
 </body>
 </html>

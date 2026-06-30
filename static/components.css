@@ -1,0 +1,146 @@
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.item-list li {
+    margin-bottom: 0.75em;
+    line-height: 1.5;
+}
+
+.item-list a {
+    font-size: var(--body);
+}
+
+.item-list small {
+    font-size: var(--small);
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+}
+
+.project-meta {
+    font-family: var(--font-sans);
+    font-size: var(--small);
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.project-meta a {
+    color: var(--text-muted);
+    text-decoration: underline;
+}
+
+.project-meta a:hover {
+    color: var(--text-primary);
+    opacity: 1;
+}
+
+.home-section {
+    margin-bottom: 2.5rem;
+}
+
+.home-section h2 {
+    font-size: var(--h3);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+.home-section > p {
+    color: var(--text-secondary);
+}
+
+nav {
+    font-family: var(--font-sans);
+    font-size: var(--small);
+}
+
+nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: var(--text-primary);
+    opacity: 1;
+}
+
+.nav-toggle {
+    display: none;
+}
+
+.nav-label {
+    display: none;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.25rem 0;
+}
+
+.hamburger,
+.hamburger::before,
+.hamburger::after {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text-secondary);
+    border-radius: 2px;
+    transition: background var(--transition);
+}
+
+.hamburger {
+    position: relative;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: "";
+    position: absolute;
+    left: 0;
+}
+
+.hamburger::before {
+    top: -6px;
+}
+
+.hamburger::after {
+    top: 6px;
+}
+
+.nav-label:hover .hamburger,
+.nav-label:hover .hamburger::before,
+.nav-label:hover .hamburger::after {
+    background: var(--text-primary);
+}
+
+.nav-links a {
+    margin-right: 1.25em;
+    line-height: 2;
+}
+
+@media (max-width: 600px) {
+    .nav-label {
+        display: inline-block;
+    }
+
+    .nav-links {
+        display: none;
+        margin-top: 0.5rem;
+    }
+
+    .nav-links a {
+        display: block;
+        margin-right: 0;
+        line-height: 2;
+    }
+
+    .nav-toggle:checked + .nav-label + .nav-links {
+        display: block;
+    }
+}
+
+@media (min-width: 601px) {
+    .nav-links {
+        display: block;
+    }
+}
