@@ -25,12 +25,17 @@ pub fn strip_front_matter(content: &str) -> &str {
 pub fn get_post(slug: &str) -> Option<Post> {
     let (kind, clean_slug) = slug.split_once('/').unwrap_or(("", slug));
 
-    let path = format!("content/posts/{}/{}.md", kind, clean_slug);
+    let path = if kind == "ramblings" {
+        format!("content/ramblings/{}.md", clean_slug)
+    } else {
+        format!("content/posts/{}/{}.md", kind, clean_slug)
+    };
     println!("loading file: {}", path);
 
     let posts = match kind {
         "articles" => recent_articles(),
         "blog" => recent_blogs(),
+        "ramblings" => recent_ramblings(),
         _ => return None,
     };
 
@@ -164,4 +169,34 @@ pub fn get_project(slug: &str) -> Option<Project> {
     project.content = Some(content);
 
     Some(project)
+}
+pub fn recent_ramblings() -> Vec<Post> {
+    let mut posts = Vec::new();
+
+    if let Ok(entries) = fs::read_dir("content/ramblings") {
+        for entry in entries.flatten() {
+            if entry.path().extension().and_then(|e| e.to_str()) == Some("md") {
+                let slug = entry
+                    .path()
+                    .file_stem()
+                    .unwrap()
+                    .to_string_lossy()
+                    .to_string();
+                let text = fs::read_to_string(entry.path()).unwrap_or_default();
+
+                let title = extract_field(&text, "title:").unwrap_or_else(|| slug.clone());
+                let date = extract_field(&text, "date:");
+                
+                let body = strip_front_matter(&text).trim().to_string();
+
+                posts.push(Post {
+                    kind: PostType::Ramblings,
+                    summary: PostSummary { title, slug, date },
+                    content: Some(body),
+                });
+            }
+        }
+    }
+
+    sort_by_date(posts)
 }

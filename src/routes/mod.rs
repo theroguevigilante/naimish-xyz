@@ -5,3 +5,4 @@ pub mod donate;
 pub mod gen_feed;
 pub mod home;
 pub mod projects;
+pub mod ramblings;

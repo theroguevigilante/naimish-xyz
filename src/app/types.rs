@@ -5,8 +5,9 @@ pub struct Post {
     pub content: Option<String>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub enum PostType {
+    Ramblings,
     Blog,
     Article,
 }
@@ -27,6 +28,7 @@ impl PostSummary {
 impl Post {
     pub fn kind_route(&self) -> &'static str {
         match self.kind {
+            PostType::Ramblings => "ramblings/",
             PostType::Article => "articles/",
             PostType::Blog => "blog/",
         }

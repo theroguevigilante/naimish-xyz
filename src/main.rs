@@ -14,6 +14,7 @@ use routes::donate;
 use routes::gen_feed;
 use routes::home;
 use routes::projects;
+use routes::ramblings;
 
 #[tokio::main]
 async fn main() {
@@ -21,6 +22,12 @@ async fn main() {
     let addr = format!("0.0.0.0:{}", port);
     let router = Router::new()
         .route("/", get(home::handler))
+        .nest(
+            "/ramblings",
+            Router::new()
+                .route("/", get(ramblings::list_handler))
+                .route("/{slug}", get(ramblings::handler)),
+        )
         .nest(
             "/articles",
             Router::new()
@@ -43,6 +50,7 @@ async fn main() {
         )
         .nest_service("/static", ServeDir::new("static"))
         .route_service("/naimish.asc", get_service(ServeFile::new("naimish.asc")))
+        .route("/card", get(client_type::cli_card_handler))
         .route("/client_test", get(client_type::handler))
         .route("/rss.xml", get(gen_feed::handler))
         .route("/rss", get(gen_feed::handler));
