@@ -15,9 +15,32 @@
     </section>
 
     <section class="home-section">
+        <h2>Ramblings</h2>
+        <div class="ramblings-timeline">
+            {% for post in recent_ramblings %}
+            <div class="ramblings-item" style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);">
+                <div class="ramblings-meta" style="font-family: var(--font-mono); font-size: var(--small); color: var(--text-muted); margin-bottom: 0.5rem;">
+                    {{ post.summary.date_str() }}
+                </div>
+                <div class="ramblings-content" style="font-size: var(--body);">
+                    {% if let Some(content) = post.content %}
+                    {{ content | safe }}
+                    {% else %}
+                    {{ post.summary.title }}
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            {% if recent_ramblings.is_empty() %}
+            <p>No recent ramblings updates.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="home-section">
         <h2>Recent Posts</h2>
         <ul class="item-list">
-            {% for post in recent_posts[..num_of_posts] %}
+            {% for post in recent_posts %}
             <li>
                 <a href="{{ post.kind_route() }}{{ post.summary.slug }}">{{ post.summary.title }}</a>
                 <small>({{ post.summary.date_str() }})</small>
