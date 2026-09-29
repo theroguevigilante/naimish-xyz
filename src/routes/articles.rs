@@ -25,18 +25,43 @@ pub struct PostTemplate<'a> {
     pub content: &'a str,
 }
 
-pub async fn list_handler() -> Html<String> {
+use crate::app::client_type::{detect_client, ClientType};
+use axum::http::HeaderMap;
+
+pub async fn list_handler(headers: HeaderMap) -> impl IntoResponse {
+    let posts = recent_articles();
+    
+    if let ClientType::Cli = detect_client(&headers) {
+        let mut output = format!("\x1b[1;32m=== ARTICLES ===\x1b[0m\n\n");
+        for post in &posts {
+            output.push_str(&format!("* {} ({})\n", post.summary.title, post.summary.date_str()));
+            output.push_str(&format!("  naimish.xyz/{}{}\n\n", post.kind_route(), post.summary.slug));
+        }
+        return output.into_response();
+    }
+
     let page = ListTemplate{
         page_title: "articles",
         page_description: "Beep Boop",
-        posts: recent_articles()
+        posts
     };
-    Html(page.render().unwrap())
+    Html(page.render().unwrap()).into_response()
 }
 
-pub async fn handler(Path(slug): Path<String>) -> impl IntoResponse {
+pub async fn handler(headers: HeaderMap, Path(slug): Path<String>) -> impl IntoResponse {
     match get_post(&format!("articles/{}", slug)) {
         Some(post) => {
+            if let ClientType::Cli = detect_client(&headers) {
+                let markdown_content = strip_front_matter(post.content.as_deref().unwrap_or(""));
+                let output = format!(
+                    "\x1b[1;32m# {}\x1b[0m\n\x1b[2m{}\x1b[0m\n\n{}", 
+                    post.summary.title, 
+                    post.summary.date_str(),
+                    markdown_content
+                );
+                return output.into_response();
+            }
+
             let tmpl = PostTemplate {
                 title: &post.summary.title,
                 date: post.summary.date.as_deref().unwrap_or(""),
@@ -45,6 +70,11 @@ pub async fn handler(Path(slug): Path<String>) -> impl IntoResponse {
 
             Html(tmpl.render().unwrap()).into_response()
         }
-        None => StatusCode::NOT_FOUND.into_response(),
+        None => {
+            if let ClientType::Cli = detect_client(&headers) {
+                return (StatusCode::NOT_FOUND, "404 Not Found\n").into_response();
+            }
+            StatusCode::NOT_FOUND.into_response()
+        },
     }
 }
