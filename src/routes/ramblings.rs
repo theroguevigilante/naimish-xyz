@@ -49,7 +49,7 @@ pub async fn list_handler(headers: HeaderMap) -> impl IntoResponse {
 }
 
 pub async fn handler(headers: HeaderMap, Path(slug): Path<String>) -> impl IntoResponse {
-    match get_post(&slug) {
+    match get_post(&format!("ramblings/{}", slug)) {
         Some(post) => {
             if let ClientType::Cli = detect_client(&headers) {
                 let markdown_content = strip_front_matter(post.content.as_deref().unwrap_or(""));
